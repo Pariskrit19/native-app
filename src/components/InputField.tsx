@@ -6,7 +6,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 
 
 
-const InputField = ({ label, value, onChange, keyboardType, secureTextEntry }: { label: string, value: string, onChange: any, keyboardType?: any, secureTextEntry?: boolean }) => {
+const InputField = ({ label, value, onChange, keyboardType, secureTextEntry, onFocus, isEditable }: { label: string, value: string, onChange?: any, keyboardType?: any, secureTextEntry?: boolean, onFocus?: any, isEditable?: boolean }) => {
     return (
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{label}:</Text>
@@ -14,10 +14,12 @@ const InputField = ({ label, value, onChange, keyboardType, secureTextEntry }: {
 
                 <TextInput
                     style={styles.input}
-                    onChange={onChange}
+                    onChangeText={onChange}
                     value={value}
                     keyboardType={keyboardType}
                     secureTextEntry={secureTextEntry}
+                    onFocus={onFocus}
+                    editable={isEditable}
 
                 />
 

@@ -30,6 +30,12 @@
 		C2BC486F292BCE4A000E8926 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2BC485F292BCE49000E8926 /* EvilIcons.ttf */; };
 		C2BC4870292BCE4A000E8926 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2BC4860292BCE49000E8926 /* SimpleLineIcons.ttf */; };
 		C2BC4871292BCE4A000E8926 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2BC4861292BCE49000E8926 /* MaterialIcons.ttf */; };
+		4491B60FC190403383B82D2F /* Amaranth-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5087E4CFF8A4C37A61ACD09 /* Amaranth-Bold.ttf */; };
+		4D520E85D03E4408A439448C /* Amaranth-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 642D99CF12CB4516B14EE417 /* Amaranth-BoldItalic.ttf */; };
+		C76C5AD12BF743679EA736B2 /* Amaranth-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB03EF880B2F47AF80504C76 /* Amaranth-Italic.ttf */; };
+		61B6EE47A7BF4D72A3E50649 /* Amaranth-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A2A1C62153442C0B62A2F2D /* Amaranth-Regular.ttf */; };
+		7DE660293D33449B8E774732 /* Courgette-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C548F1EE0795469A8D57764B /* Courgette-Regular.ttf */; };
+		419FD6720F974125816148ED /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = F17180106A6C4129899F34E5 /* OFL.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +82,12 @@
 		C2BC4860292BCE49000E8926 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		C2BC4861292BCE49000E8926 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C5087E4CFF8A4C37A61ACD09 /* Amaranth-Bold.ttf */ = {isa = PBXFileReference; name = "Amaranth-Bold.ttf"; path = "../assets/fonts/Amaranth-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		642D99CF12CB4516B14EE417 /* Amaranth-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Amaranth-BoldItalic.ttf"; path = "../assets/fonts/Amaranth-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DB03EF880B2F47AF80504C76 /* Amaranth-Italic.ttf */ = {isa = PBXFileReference; name = "Amaranth-Italic.ttf"; path = "../assets/fonts/Amaranth-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8A2A1C62153442C0B62A2F2D /* Amaranth-Regular.ttf */ = {isa = PBXFileReference; name = "Amaranth-Regular.ttf"; path = "../assets/fonts/Amaranth-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C548F1EE0795469A8D57764B /* Courgette-Regular.ttf */ = {isa = PBXFileReference; name = "Courgette-Regular.ttf"; path = "../assets/fonts/Courgette-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F17180106A6C4129899F34E5 /* OFL.txt */ = {isa = PBXFileReference; name = "OFL.txt"; path = "../assets/fonts/OFL.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +167,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				FB56A4D9A1074215B6F5BEE2 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -203,6 +216,20 @@
 			);
 			path = Fonts;
 			sourceTree = "<group>";
+		};
+		FB56A4D9A1074215B6F5BEE2 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C5087E4CFF8A4C37A61ACD09 /* Amaranth-Bold.ttf */,
+				642D99CF12CB4516B14EE417 /* Amaranth-BoldItalic.ttf */,
+				DB03EF880B2F47AF80504C76 /* Amaranth-Italic.ttf */,
+				8A2A1C62153442C0B62A2F2D /* Amaranth-Regular.ttf */,
+				C548F1EE0795469A8D57764B /* Courgette-Regular.ttf */,
+				F17180106A6C4129899F34E5 /* OFL.txt */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -316,6 +343,12 @@
 				C2BC486B292BCE4A000E8926 /* FontAwesome5_Solid.ttf in Resources */,
 				C2BC4867292BCE49000E8926 /* MaterialCommunityIcons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				4491B60FC190403383B82D2F /* Amaranth-Bold.ttf in Resources */,
+				4D520E85D03E4408A439448C /* Amaranth-BoldItalic.ttf in Resources */,
+				C76C5AD12BF743679EA736B2 /* Amaranth-Italic.ttf in Resources */,
+				61B6EE47A7BF4D72A3E50649 /* Amaranth-Regular.ttf in Resources */,
+				7DE660293D33449B8E774732 /* Courgette-Regular.ttf in Resources */,
+				419FD6720F974125816148ED /* OFL.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

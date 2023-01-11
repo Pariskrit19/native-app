@@ -12,7 +12,8 @@ import {
     KeyboardAvoidingView,
     Pressable,
     Keyboard,
-    ScrollView
+    ScrollView,
+    FlatList
 
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -25,24 +26,35 @@ import { setFavouriteFoods } from '../../stores/food.reducer';
 
 const Favourites = ({ navigation }: any) => {
     const { favourites } = useAppSelector((state) => state.foods);
-    const dispatch = useAppDispatch();
 
-    return favourites.length > 0 ?favourites.map(favourite => <Favourite key={favourite.id} item={favourite} onRemove={() => dispatch(setFavouriteFoods(favourite))} />)
-        : <Text style={styles.nodatatext}>No Favourites</Text>;
+    return <View style={styles.favouritesContainer}>
+        <FlatList
+            data={favourites}
+            renderItem={(item) => <Favourite item={item.item} />}
+            keyExtractor={(item: any) => item.idDrink}
+            numColumns={2}
+            horizontal={false}
+        />
+    </View>
+
+
 };
 
 const styles = StyleSheet.create({
-
+    favouritesContainer: {
+        backgroundColor: '#140F0D',
+        flex: 1
+    },
     image: {
         width: "100%",
         height: '100%'
     },
-    nodatatext:{
-        textAlign:'center',
-        fontSize:30,
-        color:'grey',
-        fontWeight:'600',
-        marginVertical:20
+    nodatatext: {
+        textAlign: 'center',
+        fontSize: 30,
+        color: 'grey',
+        fontWeight: '600',
+        marginVertical: 20
     }
 })
 

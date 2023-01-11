@@ -19,6 +19,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 import InputField from '../../components/InputField';
 import SimpleButton from '../../components/SimpleButton';
+import { THIRD_COLOR } from '../../constants/styles';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addToCart, setFavouriteFoods } from '../../stores/food.reducer';
 
@@ -33,7 +34,7 @@ const FoodDetail = ({ route, navigation }: any) => {
 
     return (
 
-        <View style={{ flex: 1, backgroundColor: 'gainsboro' }}>
+        <View style={{ flex: 1, }}>
             <View style={{ flex: 0.4 }}>
                 <Image source={{ uri: item.image }} style={styles.image} resizeMode='contain' />
                 <View style={styles.heartcontainer}>
@@ -47,11 +48,7 @@ const FoodDetail = ({ route, navigation }: any) => {
             <ScrollView style={styles.nameContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '60%' }}>
                     <Text style={styles.nametext}>{item.name}</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '30%' }}>
 
-                        {[1, 2, 3, 4, 5].map(star => <Icon key={star} name='star' style={{ color: 'gold' }} />)}
-                    </View>
-                    <Text style={{ fontSize: 12 }}>( 5 star ratings)</Text>
                 </View>
                 <View>
                     <Text style={styles.price}> Rs 150</Text>
@@ -81,17 +78,19 @@ const styles = StyleSheet.create({
 
     image: {
         width: "100%",
-        height: '100%'
+        height: '100%',
+        backgroundColor: '#140F0D',
+
     },
     favouriteIcon: {
 
         fontSize: 30,
 
-        color: 'orange',
+        color: 'azure',
+
         fontWeight: "800"
     },
     heartcontainer: {
-        backgroundColor: 'white',
         alignSelf: 'flex-start',
         position: 'absolute',
         bottom: 10,
@@ -106,18 +105,21 @@ const styles = StyleSheet.create({
     nameContainer: {
         paddingHorizontal: 10,
         paddingVertical: 10,
-        backgroundColor: 'white',
+        backgroundColor: THIRD_COLOR,
         flex: 0.4,
     },
     nametext: {
-        fontWeight: '800',
         fontSize: 25,
-        color: 'black'
+        color: 'gainsboro',
+        fontFamily: 'Amaranth-Regular'
+
     },
     price: {
         fontWeight: '600',
         fontSize: 20,
-        color: 'black'
+        color: 'gainsboro',
+        fontFamily: 'Amaranth-Regular'
+
 
     },
     bottomContainer: {
@@ -141,12 +143,12 @@ const styles = StyleSheet.create({
     },
     instructionlabel: {
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
         fontSize: 18
     },
     instructiontext: {
         fontWeight: 'bold',
-        color: 'black'
+        color: 'white'
     }
 
 })

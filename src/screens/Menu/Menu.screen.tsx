@@ -9,28 +9,28 @@ import {
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Favourite from '../../components/Favourite';
 import Loader from '../../components/Loader';
+import { PRIMARY_COLOR } from '../../constants/styles';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setFavouriteFoods } from '../../stores/food.reducer';
 
 
 
 const Menu = ({ navigation }: any) => {
-    const state = useAppSelector(state => state.foods);
-    const dispatch = useAppDispatch();
+
     const [drinks, setDrinks] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isRefetching, setIsRefetching] = useState(false);
+    const { search } = useAppSelector(state => state.foods);
 
-    const isFavouritedFood = (item: any) => {
-        return state.favourites.findIndex((favourite: any) => favourite.id === item.id) >= 0
-    }
+
 
     const getListOfFoods = async () => {
 
         setIsLoading(true)
 
-        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a', {
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -63,30 +63,18 @@ const Menu = ({ navigation }: any) => {
         getListOfFoods()
 
     }, [])
+    useEffect(() => {
+
+        getListOfFoods()
+
+    }, [search])
 
 
     const renderItem = ({ item }: any) => (
-        <Pressable onPress={() => navigation.navigate('foodDetails', item)} style={styles.drinkItem}>
-
-
-            <Image style={styles.image} source={{ uri: item?.strDrinkThumb }} resizeMode='contain' />
-            <View style={styles.description}>
-                <Text style={styles.nameLabel}>{item?.strDrink}</Text>
-                <Text style={styles.priceLabel}>{item?.strAlcoholic}</Text>
-            </View>
-            <Pressable onPress={() => dispatch(setFavouriteFoods(item))} style={{
-                position: 'absolute',
-                top: 8,
-                right: 8,
-            }}>
-                {isFavouritedFood(item) ? <Icon name={'heart'} style={styles.favouriteIcon} /> : <Icon name={'hearto'} style={styles.favouriteIcon} />}
-
-
-            </Pressable>
-
-
-        </Pressable>
+        <Favourite item={item} />
     );
+
+
     return (
 
         <View style={styles.main}>
@@ -112,7 +100,7 @@ const Menu = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: 'aliceblue',
+        backgroundColor: PRIMARY_COLOR,
         flex: 1,
 
     },
@@ -120,7 +108,7 @@ const styles = StyleSheet.create({
     favouriteIcon: {
 
         fontSize: 20,
-        color: 'orange',
+        color: 'azure',
         fontWeight: "600"
     },
     menuContainer: {
@@ -141,7 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 15,
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         margin: 8,
         padding: 15,
         width: '45%'
@@ -154,7 +142,7 @@ const styles = StyleSheet.create({
     nameLabel: {
         fontWeight: '700',
         fontSize: 15,
-        color: 'black',
+        color: 'white',
 
         flexWrap: 'wrap',
         textAlign: 'center'

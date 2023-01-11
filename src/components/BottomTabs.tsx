@@ -10,9 +10,24 @@ const BottomTabs = ({ tabs }: any) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarLabelStyle: { fontSize: 16, fontWeight: "600", },
+        tabBarLabelStyle: {
+          fontSize: 10, fontWeight: "600",
+
+        },
         tabBarActiveTintColor: 'coral',
-        tabBarInactiveTintColor: 'black',
+        tabBarInactiveTintColor: 'grey',
+        tabBarStyle: {
+          backgroundColor: '#342E33',
+          position: 'absolute',
+          width: '50%',
+          left: 100,
+          bottom: 10,
+          borderBottomRightRadius: 10,
+          borderBottomLeftRadius: 10,
+          borderTopColor: 'black'
+        },
+        tabBarShowLabel: false,
+
 
 
       }}
@@ -25,8 +40,9 @@ const BottomTabs = ({ tabs }: any) => {
           tabBarIcon: ({ color, size }) => (
             tab.IconComponent ? <tab.IconComponent name={tab.icon} color={color} size={size} /> : <Icon name={tab.icon} color={color} size={size} />
           ),
-          headerTitle: (props) => <CustomHeader name={tab.name} />, headerTitleStyle: {
-            fontWeight: "bold"
+          headerTitle: (props) => <CustomHeader name={tab.headerTitle} />,
+          headerStyle: {
+            backgroundColor: '#140F0D',
           },
           headerShown: !tab.hideHeader,
           tabBarBadge: tab.badgeCount ?? undefined,

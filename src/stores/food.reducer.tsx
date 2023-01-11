@@ -6,9 +6,10 @@ import {
 } from '@reduxjs/toolkit';
 
 interface favouriteType { id: number, name: string, price: number }
-const initialState: { favourites: favouriteType[], carts: any[] } = {
+const initialState: { favourites: favouriteType[], carts: any[], search: string } = {
   favourites: [],
   carts: [],
+  search: 'a'
 }
 
 const foodSlice = createSlice({
@@ -33,6 +34,9 @@ const foodSlice = createSlice({
 
       else
         state.carts.push(action.payload)
+    },
+    setSearch: (state, action: PayloadAction<any>) => {
+      state.search = action.payload
     }
 
   }
@@ -40,4 +44,4 @@ const foodSlice = createSlice({
 
 export default foodSlice.reducer;
 
-export const { setFavouriteFoods, addToCart } = foodSlice.actions;
+export const { setFavouriteFoods, addToCart, setSearch } = foodSlice.actions;

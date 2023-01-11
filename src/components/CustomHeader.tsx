@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Text, View, StyleSheet, DrawerLayoutAndroid, Button, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { FONT_COLOR, PRIMARY_COLOR } from '../constants/styles';
 
 
 const CustomHeader = ({ showHeader = true, name }: any) => {
@@ -8,18 +9,8 @@ const CustomHeader = ({ showHeader = true, name }: any) => {
 
 
     return <View style={styles.header}>
-        {/* <Pressable onPress={() => drawer.current?.openDrawer()}>
-
-                <Icon name='menu-fold' size={30} color='black' />
-            </Pressable> */}
-        <View style={{ width: '12%' }}>
-            {name === 'Home' && <Icon name='menu-fold' size={30} color='black' />}
-
-        </View>
-
-        <View style={{ width: '82%' }}>
-
-            {showHeader && <Text style={styles.headerTitle}>{name}</Text>}
+        <View style={{ width: '100%' }}>
+            {showHeader && <Text style={styles.headerTitle}> {name}</Text>}
         </View>
 
     </View>
@@ -29,19 +20,17 @@ const CustomHeader = ({ showHeader = true, name }: any) => {
 
 const styles = StyleSheet.create({
 
-
-
     headerTitle: {
-        textAlign: 'center',
-        fontWeight: "700",
-        color: 'black',
-        fontSize: 25,
+        color: FONT_COLOR,
+        fontSize: 30,
+        fontFamily: 'Amaranth-Bold'
+
     },
     header: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-
-
+        backgroundColor: PRIMARY_COLOR,
+        width: '100%'
     },
 
 })

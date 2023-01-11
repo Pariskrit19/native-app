@@ -21,12 +21,15 @@ import InputField from '../../components/InputField';
 import { launchImageLibrary } from 'react-native-image-picker';
 import SimpleButton from '../../components/SimpleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 
 const Signup = ({ navigation }: any) => {
-    const [user, setUser] = useState({ name: '', email: '', password: '', city: '', phoneNumber: '' });
+    const [user, setUser] = useState({ name: '', email: '', password: '', city: '', phoneNumber: '', dob: '' });
     const [profileImage, setProfileImage] = useState('');
+    const [date, setDate] = useState(new Date(1598051730000));
+    const [openDatePicker, setOpenDatePicker] = useState(false);
 
     const handleChange = (e: any) => {
         console.log(e.target)
@@ -44,6 +47,18 @@ const Signup = ({ navigation }: any) => {
         });
     }
 
+    const onChange = (event: any, selectedDate: any) => {
+        const currentDate = selectedDate;
+        setUser({ ...user, dob: currentDate });
+        setOpenDatePicker(false)
+        console.log(selectedDate)
+    };
+
+    const handleOpenDatePicker = () => {
+        setOpenDatePicker(true)
+
+    }
+
     return (
 
         <ScrollView>
@@ -51,6 +66,19 @@ const Signup = ({ navigation }: any) => {
                 <View style={styles.formContainer}>
                     <InputField label='Name' value={user.name} onChange={handleChange} keyboardType='default' />
                     <InputField label='Email' value={user.email} onChange={handleChange} keyboardType='default' />
+                    <Pressable onPress={handleOpenDatePicker}>
+                        <InputField label='D.O.B' value={user.dob} keyboardType='default' isEditable={false} />
+                    </Pressable>
+                    {openDatePicker && <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode='date'
+                        is24Hour={true}
+                        onChange={onChange}
+                        dateFormat="dayofweek day month"
+
+
+                    />}
                     <InputField label='Password' value={user.password} onChange={handleChange} keyboardType='default' />
                     <Text style={styles.label}>Profile Pic:</Text>
                     <View style={styles.iconContainer}>
@@ -127,9 +155,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
 
     },
-    image:{
-        width:140,
-        height:140
+    image: {
+        width: 140,
+        height: 140
     }
 
 })

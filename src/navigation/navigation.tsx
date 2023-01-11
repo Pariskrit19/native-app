@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Signin from '../screens/Signin';
@@ -15,10 +15,14 @@ import BottomTabs from '../components/BottomTabs';
 import Favourites from '../screens/Favourites/Favourites.screen';
 import Profile from '../screens/Profile/Profile.screen';
 import Menu from '../screens/Menu/Menu.screen';
-import { useAppSelector } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import AntIcon from '../components/ShoppingCartIcon';
-import ShoppingCartIcon from '../components/ShoppingCartIcon';
+import AntIcon from '../components/Avatar';
+import Avatar from '../components/Avatar';
+import { FONT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, THIRD_COLOR } from '../constants/styles';
+import { authenticate, onLogout } from '../stores/user.reducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SearchBox from '../components/SearchBox';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,82 +38,123 @@ const CustomSigninHeader = () => {
   );
 };
 
+const DrawerHeader = () => {
+  return <SearchBox />
+}
+
 function CustomDrawerContent(props: any) {
-  const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    dispatch(onLogout())
+
+    try {
+      await AsyncStorage.removeItem('isAuth')
+    } catch (e) {
+      // remove error
+    }
+  }
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
 
       <DrawerItem
         label="Logout"
-        onPress={() => navigation.navigate('login')}
+        onPress={handleLogout}
+        inactiveTintColor={FONT_COLOR}
+
       />
     </DrawerContentScrollView>
   );
 }
 
-const MainNavigation = () => {
+const MainTabs = () => {
   const { favourites } = useAppSelector(state => state.foods)
+
+  return <Drawer.Navigator initialRouteName="Home" drawerContent={CustomDrawerContent} screenOptions={{ headerTitle: DrawerHeader, drawerStyle: { backgroundColor: THIRD_COLOR, }, drawerInactiveTintColor: FONT_COLOR, drawerActiveBackgroundColor: SECONDARY_COLOR, drawerActiveTintColor: FONT_COLOR, headerTintColor: FONT_COLOR, headerRight: () => <Avatar />, headerStyle: { backgroundColor: PRIMARY_COLOR }, headerRightContainerStyle: { marginRight: 10, }, headerTitleStyle: { display: 'none' } }}  >
+    <Drawer.Screen name="Home" children={() => <BottomTabs tabs={[
+      { name: 'Main', Component: Menu, icon: 'home', headerTitle: 'Choose your drink' },
+      { name: 'Favourites', Component: Favourites, icon: 'hearto', badgeCount: favourites.length, headerTitle: 'My favourites' },
+    ]} />} />
+  </Drawer.Navigator>
+}
+
+const SigninTabs = () => (
+  <TopTabs
+    tabsItems={[
+      { name: 'Signin', Component: Signin },
+      { name: 'Signup', Component: Signup },
+    ]}
+  />
+)
+
+const AuthenticatedStack = () => <Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Screen
+    name="Main"
+    component={MainTabs}
+    options={{
+      headerShown: false,
+    }}
+  />
+
+  <Stack.Screen
+    name="foodDetails"
+    component={FoodDetail}
+    options={{
+      headerShown: true,
+
+      title: '',
+      headerStyle: {
+        backgroundColor: '#140F0D',
+      },
+      headerTintColor: 'white'
+    }}
+  />
+
+</Stack.Navigator>
+
+const UnAuthenticatedStack = () => <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+  <Stack.Screen
+    name="login"
+    component={SigninTabs}
+    options={{
+      headerTitle: props => <CustomSigninHeader />,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerShown: true,
+    }}
+  />
+</Stack.Navigator>
+
+
+
+const MainNavigation = () => {
+  const user = useAppSelector(state => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+
+    const getMyStringValue = async () => {
+      try {
+        const isAuth = await AsyncStorage.getItem('isAuth')
+        if (isAuth)
+          dispatch(authenticate())
+
+        console.log(isAuth)
+      } catch (e) {
+        // read error
+      }
+
+    }
+    getMyStringValue()
+
+  }, [])
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen
-            name="login"
-            children={() => (
-              <TopTabs
-                tabsItems={[
-                  { name: 'Signin', Component: Signin },
-                  { name: 'Signup', Component: Signup },
-                ]}
-              />
-            )}
-            options={{
-              headerTitle: props => <CustomSigninHeader />,
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              headerShown: true,
-            }}
-          />
-
-          <Stack.Screen
-            name="Main"
-
-            children={() => <Drawer.Navigator initialRouteName="Main" drawerContent={CustomDrawerContent} screenOptions={{ headerRight: () => <ShoppingCartIcon />, headerRightContainerStyle: { marginRight: 10 }, headerTitleStyle: { display: 'none' } }}  >
-              <Drawer.Screen name="Home" children={() => <BottomTabs tabs={[
-                { name: 'Main', Component: Home, icon: 'home', hideHeader: true },
-                { name: 'Profile', Component: Profile, icon: 'user', },
-                { name: 'Menu', Component: Menu, IconComponent: Icon, icon: 'fast-food-outline' },
-                { name: 'Favourites', Component: Favourites, icon: 'hearto', badgeCount: favourites.length },
-              ]} />} />
-            </Drawer.Navigator>}
-            options={{
-              headerShown: false,
-
-
-            }}
-          />
-
-          <Stack.Screen
-            name="foodDetails"
-            component={FoodDetail}
-            options={{
-              headerShown: true,
-              headerTitle: () => (
-                <CustomHeader name="Details" showHeader={false} />
-              ),
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              headerRight: () => <ShoppingCartIcon />,
-
-            }}
-          />
-
-
-        </Stack.Navigator>
-
+        {user.isAuthenticated ? <AuthenticatedStack /> : <UnAuthenticatedStack />}
 
       </NavigationContainer>
 

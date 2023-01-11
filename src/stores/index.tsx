@@ -4,8 +4,8 @@ import userReducer from './user.reducer';
 
 export const store = configureStore({
   reducer: {
-    members: userReducer,
-    foods:foodReducer
+    user: userReducer,
+    foods: foodReducer
   },
 });
 

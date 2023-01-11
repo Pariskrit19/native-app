@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/AntDesign';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 
 
 export default function Loader() {
     return (
-        <View style={styles.loader}><Icon name='loading1' /></View>
+        <View style={styles.loader}><ActivityIndicator size='large' /></View>
     )
 }
 
@@ -14,6 +13,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 10
+        marginVertical: 10,
     },
 })
