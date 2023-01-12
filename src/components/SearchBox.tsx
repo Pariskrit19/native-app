@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign';
-import { FONT_COLOR, SECONDARY_COLOR } from '../constants/styles';
+import { FONT_COLOR, SECONDARY_COLOR, THIRD_COLOR } from '../constants/styles';
 import { useAppDispatch } from '../hooks/redux';
 import { setSearch } from '../stores/food.reducer';
 
@@ -27,11 +27,11 @@ export default function SearchBox() {
 
 const styles = StyleSheet.create({
     searchContainer: {
-        backgroundColor: SECONDARY_COLOR,
+        backgroundColor: THIRD_COLOR,
         flexDirection: 'row',
         width: 280,
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 0,
         paddingHorizontal: 10,
         borderRadius: 5
     },

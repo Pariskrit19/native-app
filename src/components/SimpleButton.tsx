@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { PRIMARY_COLOR } from '../constants/styles';
 
 
 
@@ -20,11 +21,11 @@ const styles = StyleSheet.create({
     buttonContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 40
+        marginVertical: 40,
     },
 
     button: {
-        backgroundColor: 'chocolate',
+        backgroundColor: PRIMARY_COLOR,
         paddingTop: 10,
         paddingRight: 20,
         paddingLeft: 20,

@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import {
-    SafeAreaView,
     View,
-    Text,
-    StatusBar,
-    TouchableOpacity,
     StyleSheet,
-    Button,
-    TextInput,
     Keyboard,
     Pressable,
-    Alert
+    Alert,
+    ScrollView
 } from 'react-native';
 import { authenticate, fetchUser } from '../../stores/user.reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import InputField from '../../components/InputField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from 'react-native-paper';
+import { SECONDARY_COLOR, THIRD_COLOR } from '../../constants/styles';
 
 const Signin = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { authenticationDetails } = useAppSelector(state => state.user);
+    const { users } = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
 
     const handleLoginPress = async () => {
-        if (authenticationDetails.email === email && authenticationDetails.password === password) {
+        const isEmailPasswordCorrect = users.find((user: any) => user.email === email && user.password);
+        if (isEmailPasswordCorrect) {
 
-            dispatch(authenticate());
+            dispatch(authenticate(isEmailPasswordCorrect));
             await AsyncStorage.setItem('isAuth', 'true')
         }
         else
@@ -42,17 +39,23 @@ const Signin = ({ navigation }: any) => {
         <>
             <Pressable onPress={Keyboard.dismiss} >
                 <View style={styles.formContainer}>
-                    <InputField label='E-mail' value={email} onChange={(text: any) => setEmail(text)} keyboardType='email-address' />
+                    <ScrollView>
+                        <InputField label='E-mail' value={email} onChange={(text: any) => setEmail(text)} keyboardType='email-address' />
 
-                    <InputField label='Password' value={password} onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
+                        <InputField label='Password' value={password} onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
 
 
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={handleLoginPress}>
-                            <Text style={styles.buttonText}>Login</Text>
-                        </TouchableOpacity>
+                        <View style={styles.buttonContainer}>
+                            <Button style={{ width: 200 }} mode="contained" onPress={handleLoginPress} buttonColor={SECONDARY_COLOR} uppercase={true}>
+                                Login
+                            </Button>
 
-                    </View>
+
+                        </View>
+
+                    </ScrollView>
+
+
 
 
 
@@ -67,6 +70,9 @@ const Signin = ({ navigation }: any) => {
 const styles = StyleSheet.create<any>({
     formContainer: {
         padding: 20,
+        height: '100%',
+        backgroundColor: THIRD_COLOR,
+
     },
     inputContainer: {
         margin: 10

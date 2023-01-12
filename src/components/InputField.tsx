@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { FONT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/styles';
 
 
 
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: "bold",
-        color: 'black',
+        color: FONT_COLOR,
         marginLeft: 5
 
     },
@@ -48,7 +49,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 15,
         zIndex: 99,
-        backgroundColor: 'white'
+        backgroundColor: SECONDARY_COLOR,
+        color: FONT_COLOR
 
 
 

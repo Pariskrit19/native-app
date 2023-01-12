@@ -15,25 +15,35 @@ export const fetchUser = createAsyncThunk('user/getUser', async () => {
 
 const userAdapter = createEntityAdapter();
 
-
+const initialState: {
+  isLoading: Boolean,
+  isAuthenticated: Boolean,
+  userDetail: any,
+  users: any
+} = {
+  isLoading: false,
+  isAuthenticated: false,
+  userDetail: {
+    email: 'abcd',
+    password: 'abcd'
+  },
+  users: []
+}
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: userAdapter.getInitialState({
-    isLoading: false,
-    isAuthenticated: false,
-    authenticationDetails: {
-      email: 'abcd',
-      password: 'abcd'
-    }
-  }),
+  initialState,
   reducers: {
 
-    authenticate: (state) => {
-      state.isAuthenticated = true
+    authenticate: (state, action) => {
+      state.isAuthenticated = true;
+      state.userDetail = action.payload
     },
     onLogout: (state) => {
       state.isAuthenticated = false
+    },
+    saveUser: (state, action) => {
+      state.users = [...state.users, action.payload]
     }
 
   },
@@ -44,5 +54,5 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { authenticate, onLogout } = userSlice.actions;
+export const { authenticate, onLogout, saveUser } = userSlice.actions;
 

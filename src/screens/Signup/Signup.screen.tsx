@@ -5,7 +5,6 @@ import {
     Text,
     StatusBar,
     TouchableOpacity,
-    Alert,
     StyleSheet,
     Image,
     TextInput,
@@ -13,7 +12,8 @@ import {
     Pressable,
     Keyboard,
     ScrollView,
-    Button
+    Button,
+    Alert
 
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -22,18 +22,20 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import SimpleButton from '../../components/SimpleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { FONT_COLOR, THIRD_COLOR } from '../../constants/styles';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { saveUser } from '../../stores/user.reducer';
+import { DatePickerModal } from 'react-native-paper-dates';
 
 
 
 const Signup = ({ navigation }: any) => {
-    const [user, setUser] = useState({ name: '', email: '', password: '', city: '', phoneNumber: '', dob: '' });
+    const [user, setUser] = useState({ name: '', email: '', password: '', image: '', dob: '' });
     const [profileImage, setProfileImage] = useState('');
     const [date, setDate] = useState(new Date(1598051730000));
     const [openDatePicker, setOpenDatePicker] = useState(false);
+    const dispatch = useAppDispatch();
 
-    const handleChange = (e: any) => {
-        console.log(e.target)
-    }
 
     const handleImageUpload = async () => {
         launchImageLibrary({
@@ -42,16 +44,27 @@ const Signup = ({ navigation }: any) => {
             maxHeight: 200,
             maxWidth: 200,
         }, (response) => {
-            console.log(response);
-            setProfileImage(response?.assets?.[0]?.uri)
+            setUser({ ...user, image: response?.assets?.[0]?.uri ?? '' })
         });
     }
 
+    const handleSignupSubmit = () => {
+        const isEmpty = Object.values(user).some(value => !Boolean(value));
+
+        if (isEmpty)
+            Alert.alert('Error!', 'Please fill all fields')
+        else {
+            dispatch(saveUser(user));
+            setUser({ name: '', email: '', password: '', image: '', dob: '' })
+            navigation.navigate('Signin')
+        }
+
+    }
+
     const onChange = (event: any, selectedDate: any) => {
-        const currentDate = selectedDate;
-        setUser({ ...user, dob: currentDate });
+        const currentDate = '' + selectedDate;
+        setUser({ ...user, dob: `${new Date(currentDate).getFullYear()}-${new Date(currentDate).getMonth() + 1}-${new Date(currentDate).getDate()}` });
         setOpenDatePicker(false)
-        console.log(selectedDate)
     };
 
     const handleOpenDatePicker = () => {
@@ -59,33 +72,41 @@ const Signup = ({ navigation }: any) => {
 
     }
 
+
     return (
 
         <ScrollView>
             <Pressable onPress={Keyboard.dismiss} >
                 <View style={styles.formContainer}>
-                    <InputField label='Name' value={user.name} onChange={handleChange} keyboardType='default' />
-                    <InputField label='Email' value={user.email} onChange={handleChange} keyboardType='default' />
+                    <InputField label='Name' value={user.name} onChange={(text: any) => setUser({ ...user, name: text })} keyboardType='default' />
+                    <InputField label='Email' value={user.email} onChange={(text: any) => setUser({ ...user, email: text })} keyboardType='default' />
                     <Pressable onPress={handleOpenDatePicker}>
                         <InputField label='D.O.B' value={user.dob} keyboardType='default' isEditable={false} />
                     </Pressable>
                     {openDatePicker && <DateTimePicker
                         testID="dateTimePicker"
-                        value={date}
+                        value={new Date()}
                         mode='date'
                         is24Hour={true}
                         onChange={onChange}
-                        dateFormat="dayofweek day month"
 
 
                     />}
-                    <InputField label='Password' value={user.password} onChange={handleChange} keyboardType='default' />
+                    {/* <DatePickerModal
+                        locale=""
+                        mode="single"
+                        visible={openDatePicker}
+                        onDismiss={() => setOpenDatePicker(false)}
+                        date={user.dob}
+                        onConfirm={onChange}
+                    /> */}
+                    <InputField label='Password' value={user.password} secureTextEntry={true} onChange={(text: any) => setUser({ ...user, password: text })} keyboardType='default' />
                     <Text style={styles.label}>Profile Pic:</Text>
                     <View style={styles.iconContainer}>
 
-                        {profileImage ? <Image
+                        {user.image ? <Image
                             source={{
-                                uri: profileImage,
+                                uri: user.image,
                             }}
                             style={styles.image}
                         /> : <Icon name='account-circle-outline' style={styles.icon} />
@@ -93,7 +114,7 @@ const Signup = ({ navigation }: any) => {
                     </View>
 
                     <SimpleButton text='Upload From Gallery' onPress={handleImageUpload} iconName='upload' />
-                    <SimpleButton text='Create Account' onPress={() => navigation.navigate('Menu')} style={{ width: '100%' }} />
+                    <SimpleButton text='Create Account' onPress={handleSignupSubmit} style={{ width: '100%' }} />
 
 
 
@@ -106,14 +127,15 @@ const Signup = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
     formContainer: {
-        padding: 20
+        padding: 20,
+        backgroundColor: THIRD_COLOR
     },
     inputContainer: {
         marginVertical: 10
     },
     label: {
         fontWeight: "bold",
-        color: 'black'
+        color: FONT_COLOR
 
     },
     input: {
@@ -145,7 +167,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 150,
-        color: 'burlywood'
+        color: FONT_COLOR
 
     },
     iconContainer: {
@@ -157,7 +179,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 140,
-        height: 140
+        height: 140,
+        borderRadius: 100
     }
 
 })

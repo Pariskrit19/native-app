@@ -30,16 +30,17 @@ const Menu = ({ navigation }: any) => {
 
         setIsLoading(true)
 
-        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-        const drinks = await response.json();
-        setDrinks(drinks.drinks.map((drink: any) => ({ ...drink, id: drink.idDrink, image: drink.strDrinkThumb, name: drink.strDrink })))
-        setIsLoading(false)
+        try {
+            const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
+            const drinks = await response.json();
+            setDrinks(drinks.drinks.map((drink: any) => ({ ...drink, id: drink.idDrink, image: drink.strDrinkThumb, name: drink.strDrink })))
+            setIsLoading(false)
+
+        } catch (error: any) {
+            console.log(error.message)
+        }
+
+
     }
 
     const refetchListOfDrinks = async () => {
@@ -88,6 +89,7 @@ const Menu = ({ navigation }: any) => {
                     horizontal={false}
                     ListFooterComponent={isRefetching ? <Loader /> : null}
                     onEndReached={refetchListOfDrinks}
+                    onEndReachedThreshold={0}
                 />}
 
 

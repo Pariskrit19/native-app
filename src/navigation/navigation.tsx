@@ -31,7 +31,7 @@ const CustomSigninHeader = () => {
   return (
     <View style={styles.signinHeader}>
       <Image
-        source={require('../assets/images/food4.png')}
+        source={require('../assets/images/home-pic2.jpg')}
         style={styles.signinImage}
       />
     </View>
@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
     width: 400,
     height: 400,
     position: 'absolute',
-    top: -160,
-    left: -160,
+    top: -100,
+    left: -10,
   },
 });
 

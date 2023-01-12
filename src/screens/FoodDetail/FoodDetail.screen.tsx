@@ -61,10 +61,7 @@ const FoodDetail = ({ route, navigation }: any) => {
 
 
             </ScrollView>
-            <View style={styles.bottomContainer}>
-                <Text style={styles.price}>Total: Rs 2000 </Text>
-                <SimpleButton text='Add To Cart' onPress={() => dispatch(addToCart(item))} iconName='shoppingcart' style={{ width: '70%' }} />
-            </View>
+
 
         </View>
 
@@ -122,21 +119,7 @@ const styles = StyleSheet.create({
 
 
     },
-    bottomContainer: {
-        backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderTopColor: 'grey',
-        borderTopWidth: 1,
-        paddingLeft: 20,
 
-    },
     instructions: {
         marginVertical: 20
 
