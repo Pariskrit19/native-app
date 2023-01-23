@@ -7,7 +7,7 @@ import { FONT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/styles'
 
 
 
-const InputField = ({ label, value, onChange, keyboardType, secureTextEntry, onFocus, isEditable }: { label: string, value: string, onChange?: any, keyboardType?: any, secureTextEntry?: boolean, onFocus?: any, isEditable?: boolean }) => {
+const InputField = ({ label, value, onChange, keyboardType, secureTextEntry, onFocus, isEditable, placeholder }: { label: string, value: string, onChange?: any, keyboardType?: any, secureTextEntry?: boolean, onFocus?: any, isEditable?: boolean, placeholder?: string }) => {
     return (
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{label}:</Text>
@@ -21,6 +21,8 @@ const InputField = ({ label, value, onChange, keyboardType, secureTextEntry, onF
                     secureTextEntry={secureTextEntry}
                     onFocus={onFocus}
                     editable={isEditable}
+                    placeholder={placeholder}
+                    placeholderTextColor='white'
 
                 />
 

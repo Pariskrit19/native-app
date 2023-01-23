@@ -9,7 +9,7 @@ interface favouriteType { id: number, name: string, price: number }
 const initialState: { favourites: favouriteType[], carts: any[], search: string } = {
   favourites: [],
   carts: [],
-  search: 'a'
+  search: ''
 }
 
 const foodSlice = createSlice({

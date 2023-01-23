@@ -14,7 +14,7 @@ export default function SearchBox() {
         if (searchText)
             dispatch(setSearch(searchText))
         else
-            dispatch(setSearch('a'))
+            dispatch(setSearch(''))
     }
 
     return (

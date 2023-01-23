@@ -40,9 +40,9 @@ const Signin = ({ navigation }: any) => {
             <Pressable onPress={Keyboard.dismiss} >
                 <View style={styles.formContainer}>
                     <ScrollView>
-                        <InputField label='E-mail' value={email} onChange={(text: any) => setEmail(text)} keyboardType='email-address' />
+                        <InputField label='E-mail' value={email} placeholder='Email' onChange={(text: any) => setEmail(text)} keyboardType='email-address' />
 
-                        <InputField label='Password' value={password} onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
+                        <InputField label='Password' value={password} placeholder='Password' onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
 
 
                         <View style={styles.buttonContainer}>

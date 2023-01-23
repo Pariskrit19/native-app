@@ -22,10 +22,12 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import SimpleButton from '../../components/SimpleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { FONT_COLOR, THIRD_COLOR } from '../../constants/styles';
+import { FONT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, THIRD_COLOR } from '../../constants/styles';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { saveUser } from '../../stores/user.reducer';
 import { DatePickerModal } from 'react-native-paper-dates';
+// import DatePicker from 'react-native-modern-datepicker';
+import DatePicker from 'react-native-neat-date-picker';
 
 
 
@@ -61,10 +63,13 @@ const Signup = ({ navigation }: any) => {
 
     }
 
-    const onChange = (event: any, selectedDate: any) => {
-        const currentDate = '' + selectedDate;
-        setUser({ ...user, dob: `${new Date(currentDate).getFullYear()}-${new Date(currentDate).getMonth() + 1}-${new Date(currentDate).getDate()}` });
+    const onChange = (event: any) => {
+        console.log(event)
+        // const currentDate = '' + selectedDate;
+        // setUser({ ...user, dob: `${new Date(currentDate).getFullYear()}-${new Date(currentDate).getMonth() + 1}-${new Date(currentDate).getDate()}` });
+        // setUser({ ...user, dob: event.dateString });
         setOpenDatePicker(false)
+
     };
 
     const handleOpenDatePicker = () => {
@@ -83,7 +88,7 @@ const Signup = ({ navigation }: any) => {
                     <Pressable onPress={handleOpenDatePicker}>
                         <InputField label='D.O.B' value={user.dob} keyboardType='default' isEditable={false} />
                     </Pressable>
-                    {openDatePicker && <DateTimePicker
+                    {/* {openDatePicker && <DateTimePicker
                         testID="dateTimePicker"
                         value={new Date()}
                         mode='date'
@@ -91,7 +96,7 @@ const Signup = ({ navigation }: any) => {
                         onChange={onChange}
 
 
-                    />}
+                    />} */}
                     {/* <DatePickerModal
                         locale=""
                         mode="single"
@@ -100,6 +105,19 @@ const Signup = ({ navigation }: any) => {
                         date={user.dob}
                         onConfirm={onChange}
                     /> */}
+                    {/* <DatePicker
+                        mode="calendar"
+                        selectorStartingYear={2000}
+                        onMonthYearChange={(selectedDate: any) => setDate(selectedDate)}
+                    /> */}
+                    <DatePicker
+                        isVisible={openDatePicker}
+                        mode={'range'}
+                        onCancel={() => setOpenDatePicker(false)}
+                        onConfirm={onChange}
+                        maxDate={new Date()}
+                        colorOptions={{ headerColor: THIRD_COLOR, backgroundColor: THIRD_COLOR, weekDaysColor: FONT_COLOR, dateTextColor: FONT_COLOR, selectedDateBackgroundColor: 'black' }}
+                    />
                     <InputField label='Password' value={user.password} secureTextEntry={true} onChange={(text: any) => setUser({ ...user, password: text })} keyboardType='default' />
                     <Text style={styles.label}>Profile Pic:</Text>
                     <View style={styles.iconContainer}>

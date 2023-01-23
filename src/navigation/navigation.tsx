@@ -38,7 +38,7 @@ const CustomSigninHeader = () => {
   );
 };
 
-const DrawerHeader = () => {
+const DrawerHeader = (props: any) => {
   return <SearchBox />
 }
 

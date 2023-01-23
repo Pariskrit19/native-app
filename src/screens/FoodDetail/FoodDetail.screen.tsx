@@ -17,9 +17,7 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
-import InputField from '../../components/InputField';
-import SimpleButton from '../../components/SimpleButton';
-import { THIRD_COLOR } from '../../constants/styles';
+import { FONT_FAMILY_ONE, THIRD_COLOR } from '../../constants/styles';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addToCart, setFavouriteFoods } from '../../stores/food.reducer';
 
@@ -31,6 +29,7 @@ const FoodDetail = ({ route, navigation }: any) => {
     const dispatch = useAppDispatch();
     const { favourites } = useAppSelector(state => state.foods);
     const isFavourited = favourites.findIndex(favourite => favourite.id === item.id) >= 0;
+
 
     return (
 
@@ -50,9 +49,22 @@ const FoodDetail = ({ route, navigation }: any) => {
                     <Text style={styles.nametext}>{item.name}</Text>
 
                 </View>
-                <View>
-                    <Text style={styles.price}> Rs 150</Text>
+
+                <View style={styles.drinksTypeContainer}>
+                    <View style={[styles.singleType, styles.borderRight]}>
+                        <Text style={styles.typeText}>CATEGORY</Text>
+                        <Text style={styles.typeTextValue}>{item.strCategory}</Text>
+                    </View>
+                    <View style={[styles.singleType, styles.borderRight]}>
+                        <Text style={styles.typeText}>ALOCHOLIC</Text>
+                        <Text style={styles.typeTextValue}>{item.strAlcoholic}</Text>
+                    </View>
+                    <View style={styles.singleType}>
+                        <Text style={styles.typeText}>GLASS TYPES</Text>
+                        <Text style={styles.typeTextValue}>{item.strGlass}</Text>
+                    </View>
                 </View>
+
                 <View style={styles.instructions}>
                     <Text style={styles.instructionlabel}>Instructions</Text>
                     <Text style={styles.instructiontext}>{item.strInstructions}</Text>
@@ -96,8 +108,6 @@ const styles = StyleSheet.create({
         padding: 8,
         elevation: 4
 
-
-
     },
     nameContainer: {
         paddingHorizontal: 10,
@@ -106,16 +116,16 @@ const styles = StyleSheet.create({
         flex: 0.4,
     },
     nametext: {
-        fontSize: 25,
+        fontSize: 45,
         color: 'gainsboro',
-        fontFamily: 'Amaranth-Regular'
+        fontFamily: FONT_FAMILY_ONE
 
     },
     price: {
         fontWeight: '600',
         fontSize: 20,
         color: 'gainsboro',
-        fontFamily: 'Amaranth-Regular'
+        fontFamily: FONT_FAMILY_ONE
 
 
     },
@@ -132,6 +142,31 @@ const styles = StyleSheet.create({
     instructiontext: {
         fontWeight: 'bold',
         color: 'white'
+    },
+    drinksTypeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 20,
+        marginHorizontal: 30
+    },
+    singleType: {
+        paddingHorizontal: 10
+    },
+    typeText: {
+        color: 'grey',
+        fontWeight: '600',
+        fontSize: 12,
+        textAlign: 'center'
+    },
+    typeTextValue: {
+        color: 'burlywood',
+        textAlign: 'center',
+        fontWeight: '600',
+        fontSize: 15
+    },
+    borderRight: {
+        borderRightWidth: 1,
+        borderRightColor: 'grey',
     }
 
 })

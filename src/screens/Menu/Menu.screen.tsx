@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Image,
     Pressable,
-    FlatList
+    FlatList,
+    StatusBar
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -28,6 +29,7 @@ const Menu = ({ navigation }: any) => {
 
     const getListOfFoods = async () => {
 
+
         setIsLoading(true)
 
         try {
@@ -44,6 +46,9 @@ const Menu = ({ navigation }: any) => {
     }
 
     const refetchListOfDrinks = async () => {
+        if (search) {
+            return;
+        }
 
         setIsRefetching(true)
 
@@ -79,6 +84,11 @@ const Menu = ({ navigation }: any) => {
     return (
 
         <View style={styles.main}>
+            <StatusBar
+                animated={true}
+                backgroundColor={PRIMARY_COLOR}
+
+            />
             {isLoading ? <Loader /> :
 
                 <FlatList
