@@ -23,6 +23,7 @@ import { FONT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, THIRD_COLOR } from '../cons
 import { authenticate, onLogout } from '../stores/user.reducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchBox from '../components/SearchBox';
+import { Snackbar } from 'react-native-paper';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -142,7 +143,6 @@ const MainNavigation = () => {
         if (isAuth)
           dispatch(authenticate())
 
-        console.log(isAuth)
       } catch (e) {
         // read error
       }
@@ -153,6 +153,13 @@ const MainNavigation = () => {
   }, [])
   return (
     <SafeAreaProvider>
+      <Snackbar
+        visible={true}
+        onDismiss={() => { }}
+        duration={8000}
+      >
+        Hey there! I'm a Snackbar.
+      </Snackbar>
       <NavigationContainer>
         {user.isAuthenticated ? <AuthenticatedStack /> : <UnAuthenticatedStack />}
 

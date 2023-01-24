@@ -5,14 +5,16 @@ import {
     Keyboard,
     Pressable,
     Alert,
-    ScrollView
+    ScrollView,
+    Text
 } from 'react-native';
 import { authenticate, fetchUser } from '../../stores/user.reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import InputField from '../../components/InputField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button } from 'react-native-paper';
-import { SECONDARY_COLOR, THIRD_COLOR } from '../../constants/styles';
+import { Button, Divider } from 'react-native-paper';
+import { FONT_COLOR, SECONDARY_COLOR, THIRD_COLOR } from '../../constants/styles';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Signin = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
@@ -37,12 +39,13 @@ const Signin = ({ navigation }: any) => {
 
     return (
         <>
+
             <Pressable onPress={Keyboard.dismiss} >
                 <View style={styles.formContainer}>
                     <ScrollView>
                         <InputField label='E-mail' value={email} placeholder='Email' onChange={(text: any) => setEmail(text)} keyboardType='email-address' />
 
-                        <InputField label='Password' value={password} placeholder='Password' onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
+                        <InputField label='Password' type='password' value={password} placeholder='Password' onChange={(text: any) => setPassword(text)} secureTextEntry={true} />
 
 
                         <View style={styles.buttonContainer}>
@@ -51,6 +54,19 @@ const Signin = ({ navigation }: any) => {
                             </Button>
 
 
+                        </View>
+                        <View style={styles.dividerContainer}>
+                            <View style={styles.divider} />
+                            <Text style={styles.or}>OR</Text>
+                            <View style={styles.divider} />
+                        </View>
+                        <View>
+                            <Text style={styles.signin}>Sign in using:</Text>
+                            <View style={styles.signinIcons}>
+                                <Icon name='google' color='white' size={30} />
+                                <Icon name='facebook-square' color='white' size={30} />
+                                <Icon name='twitter' color='white' size={30} />
+                            </View>
                         </View>
 
                     </ScrollView>
@@ -108,7 +124,35 @@ const styles = StyleSheet.create<any>({
         color: 'white',
         fontWeight: '800',
         textAlign: 'center'
+    },
+    dividerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    divider: {
+        backgroundColor: 'black',
+        height: 2,
+        flex: 1
+    },
+    or: {
+        color: FONT_COLOR,
+        fontSize: 20,
+        fontWeight: '600',
+        marginHorizontal: 10
+    },
+    signin: {
+        textAlign: 'center',
+        marginVertical: 20,
+        color: FONT_COLOR,
+
+    },
+    signinIcons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 100,
     }
+
 
 
 });
